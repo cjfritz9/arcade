@@ -10,6 +10,7 @@
 // Switch Turns / Computer Turn if 1P
 
 
+
 const xClass = 'x';
 const oClass = 'o';
 const winningCombinations = [
@@ -21,17 +22,45 @@ const winningCombinations = [
     [2, 5, 8],
     [0, 4, 8],
     [6, 4, 2]
-]
-const tiles = document.getElementsByTagName('td')
+];
+const tiles = document.querySelectorAll('td');
+const gameArea = document.getElementById('gameGrid')
+
 let oTurn;
 
-tiles.addEventListener('click', function(event) {
+const resetState = () => {
+    state.players = ['', ''];
+
+}
+
+const clickHandler = (event) => {
     const tile = event.target;
-    const currentClass = oTurn ? oClass : xClass
-    placeMark(tile, currentClass)
+    const currentClass = oTurn ? oClass : xClass;
+    placeMark(tile, currentClass);
+    changeTurns();
+    setTurnName();
+}
+
+const changeTurns = () => {
+    oTurn = !oTurn;
+}
+
+const setTurnName = () => {
+
+}
+
+tiles.forEach(tile => {
+    tile.addEventListener('click', clickHandler, {once:true})
 })
 
-
-function placeMark(tile, currentClass) {
+const placeMark = (tile, currentClass) => {
     tile.classList.add(currentClass);
 }
+
+// const modeSelect = () => {
+//     let text;
+//     text = `
+//     <button>Single Player</button>
+//     <button>Versus</button>
+//     `
+// }
