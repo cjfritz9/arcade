@@ -135,7 +135,8 @@ function catsGame() {
     }
     return false
 }
-//broken - never works, EVER
+//broken - never works, EVER. I have tried like 10 methods from removing classes to counting turns, 900 diff loops
+//etc. guess they call it a cat's game because it's fickle like a cat >:(
 
 
 versusButton.addEventListener('click', versusGame)
