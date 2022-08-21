@@ -11,18 +11,25 @@
 // Switch Turns / Computer Turn if 1P
 
 let headerText = document.getElementById('titleText')
-let singlePlayerText = document.getElementById('single-player-text')
-let singlePlayerBtn = document.getElementById('single-player-button')
 let playerOneText = document.getElementById('player-one-text')
 let playerTwoText = document.getElementById('player-two-text')
-let versusButton = document.getElementById('verus')
+let versusButton = document.getElementById('versus')
 let restartButton = document.getElementById('restart-button')
 let tiles = Array.from(document.getElementsByClassName('tile'))
+let gameArea = document.getElementById('game-area')
+let submitButtons = document.getElementsByClassName('name-input')
+let pvpText = document.getElementById('PvP-text')
+let nameForm = document.getElementsByClassName('versus-wrapper')[0]
 
+const empty = null
 const playerX = "X"
 const playerO = "O"
 let currentPlayer = playerX
-let gameBoard = Array(9).fill(null)
+let gameBoard = [
+    null, null, null,
+    null, null, null,
+    null, null, null
+]
 const winningValues = [
     [0, 1, 2],
     [3, 4, 5],
@@ -34,14 +41,13 @@ const winningValues = [
     [2, 4, 6]
 ]
 
-startGame()
-
 function clickHandler(event) {
     const tileId = event.target.id
 
     if(!gameBoard[tileId]){
         gameBoard[tileId] = currentPlayer
         event.target.innerText = currentPlayer
+        event.target.classList.remove('empty')
 
         if(winnerFunction() !== false) {
             headerText.textContent = `${currentPlayer} wins!`
@@ -49,35 +55,58 @@ function clickHandler(event) {
         }
         else if(catsGame() !== false) {
             headerText.textContent = `Cat's Game!`
+            tiles.forEach(tile => tile.removeEventListener('click', clickHandler))
         }
         else {
         currentPlayer = currentPlayer == playerX ? playerO : playerX
+        headerText.textContent = `${currentPlayer}'s Turn`
         }
     }
 }
 
-restartButton.addEventListener('click', restart)
+function versusGame() {
+    if(playerOneText.value.length || playerTwoText.value.length === 0 ) {
+        versusButton.removeEventListener('click', versusGame)
+    }
+    headerText.textContent = `${currentPlayer}'s Turn`
+
+
+    renderPlayers()
+    renderStart()
+    startGame()
+}
+
+function renderPlayers () {
+    pvpText.textContent = `${playerOneText.value} ( X ) vs. ${playerTwoText.value} ( O )`
+}
+
+function renderStart() {
+    nameForm.classList.add('hide')
+}
+
+function startGame() {
+    versusButton.addEventListener('click', versusGame)
+    tiles.forEach(tile => tile.addEventListener('click', clickHandler))
+}
 
 function restart() {
     gameBoard.fill(null)
     
     tiles.forEach(tile => {
-        tile.innerText = ''
+        tile.innerText = null
     })
     currentPlayer = playerX
     headerText.textContent = 'Tic-Tac-Toe'
+    pvpText.textContent = ''
+    nameForm.classList.remove('hide')
     startGame()
-}
-
-function startGame() {
-    tiles.forEach(tile => tile.addEventListener('click', clickHandler))
 }
 
 function winnerFunction() {
     for (const userValues of winningValues) {
-        let [a, b, c] = userValues
+        let [num1, num2, num3] = userValues
 
-        if(gameBoard[a] && (gameBoard[a] === gameBoard[b] && gameBoard[a] === gameBoard[c])) {
+        if(gameBoard[num1] && (gameBoard[num1] === gameBoard[num2] && gameBoard[num1] === gameBoard[num3])) {
             return userValues
         }
     }
@@ -89,6 +118,10 @@ function catsGame() {
 }
 
 
+versusButton.addEventListener('click', versusGame)
+restartButton.addEventListener('click', restart)
+
 // startGame() will need to go inside of a function after players are selected (try to hide game board if you can?)
-// Next Goals : Draw Game & remove clickability after winning
+// Next Goals : Draw Game; responsive inputs & buttons
 // classList.add('show')
+// debugging note: force cats game order index 6,8,1,3,0,2,5,4,7
