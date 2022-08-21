@@ -135,6 +135,7 @@ function catsGame() {
     }
     return false
 }
+//broken - never works, EVER
 
 
 versusButton.addEventListener('click', versusGame)
