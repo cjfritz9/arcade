@@ -86,6 +86,10 @@ button {
     margin: 0px 10px;
 }
 
+#versus.hide {
+    visibility: hidden;
+}
+
 #versus {
     margin: 10px;
     font-size: 10px;

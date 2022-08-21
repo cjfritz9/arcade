@@ -20,7 +20,10 @@ let gameArea = document.getElementById('game-area')
 let submitButtons = document.getElementsByClassName('name-input')
 let pvpText = document.getElementById('PvP-text')
 let nameForm = document.getElementsByClassName('versus-wrapper')[0]
+//lots of unused things here from various function attempts that failed, left in to
+//show work
 
+let turnCount = 0
 const empty = null
 const playerX = "X"
 const playerO = "O"
@@ -47,7 +50,7 @@ function clickHandler(event) {
     if(!gameBoard[tileId]){
         gameBoard[tileId] = currentPlayer
         event.target.innerText = currentPlayer
-        event.target.classList.remove('empty')
+        // event.target.classList.remove('empty')
 
         if(winnerFunction() !== false) {
             headerText.textContent = `${currentPlayer} wins!`
@@ -60,13 +63,18 @@ function clickHandler(event) {
         else {
         currentPlayer = currentPlayer == playerX ? playerO : playerX
         headerText.textContent = `${currentPlayer}'s Turn`
+        turnCount++
+        console.log(turnCount)
         }
     }
 }
+//all tiles have an id relevant to their index values - if null tile is clicked it is set to current player
+//as well as the text. classList remove is from one of my 100 attempts for a working catsGame function
+//if game is won, invoke the function. otherwise change turns & header text
 
 function versusGame() {
-    if(playerOneText.value.length || playerTwoText.value.length === 0 ) {
-        versusButton.removeEventListener('click', versusGame)
+    if(playerOneText.value.length || playerTwoText.value.length > 0) {
+        versusButton.classList.remove('hide')
     }
     headerText.textContent = `${currentPlayer}'s Turn`
 
@@ -75,19 +83,24 @@ function versusGame() {
     renderStart()
     startGame()
 }
+//condition to show button after text is input in both fields - could not fix
+//h1 changes to show whose turn it is
 
 function renderPlayers () {
     pvpText.textContent = `${playerOneText.value} ( X ) vs. ${playerTwoText.value} ( O )`
 }
+//displays values from the user input names along with a reminder of which "team" they selected
 
 function renderStart() {
     nameForm.classList.add('hide')
 }
+//hides player name inputs
 
 function startGame() {
     versusButton.addEventListener('click', versusGame)
     tiles.forEach(tile => tile.addEventListener('click', clickHandler))
 }
+//adds both event listeners needed to start and play the game
 
 function restart() {
     gameBoard.fill(null)
@@ -99,8 +112,10 @@ function restart() {
     headerText.textContent = 'Tic-Tac-Toe'
     pvpText.textContent = ''
     nameForm.classList.remove('hide')
+    turnCount = 0
     startGame()
 }
+//resets board & stored values, current player, h1, shown player v player text, and hidden inputs
 
 function winnerFunction() {
     for (const userValues of winningValues) {
@@ -112,9 +127,13 @@ function winnerFunction() {
     }
     return false
 }
+//compares index values between an array of "wins" and current players filled index values every turn
 
 function catsGame() {
-    
+    if(turnCount === 9) {
+        return true
+    }
+    return false
 }
 
 
