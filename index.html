@@ -4,28 +4,46 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Silkscreen&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="style.css">
+    <script src="app.js" defer></script>
     <title>Tic-Tac-Toe</title>
 </head>
 <body>
-    <h1>Tic-Tac-Toe</h1>
-    <table id="gameGrid" >
-        <tr class="rows">
-            <td id="col-1"></td>
-            <td id="col-2"></td>
-            <td id="col-3"></td>
-        </tr>
-        <tr class="rows">
-            <td id="col-1"></td>
-            <td id="col-2"></td>
-            <td id="col-3"></td>
-        </tr>
-        <tr class="rows">
-            <td id="col-1"></td>
-            <td id="col-2"></td>
-            <td id="col-3"></td>
-        </tr>
-    </table>
-    <script src="app.js" defer></script>
+    <main class="container">
+        <h1 id="titleText">Tic-Tac-Toe</h1>
+        <div class="input-wrapper">
+            <div class="single-player-wrapper">
+                <input type="text" placeholder="Player Name" class="name-input" id="single-player-text">
+                <button id="single-player-button">Single Player</button>
+            </div>
+            <div class="versus-wrapper">
+                <input type="text" placeholder="Player 1" class="name-input" id="player-one-text">
+                <p id="versus-text">vs.</p>
+                <input type="text" placeholder="Player 2" class="name-input" id="player-two-text">
+                <button id="versus">Versus</button>
+            </div>
+        </div>
+        <div id="gameArea">
+            <div class="tile0 tile" id="0"></div>
+            <div class="tile1 tile" id="1"></div>
+            <div class="tile2 tile" id="2"></div>
+            <div class="tile3 tile" id="3"></div>
+            <div class="tile4 tile" id="4"></div>
+            <div class="tile5 tile" id="5"></div>
+            <div class="tile6 tile" id="6"></div>
+            <div class="tile7 tile" id="7"></div>
+            <div class="tile8 tile" id="8"></div>
+        </div>
+        <button id="restart-button">Restart</button>
+    </main>
 </body>
 </html>
